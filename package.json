@@ -1,0 +1,51 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "shortcut-quick-create",
+  "title": "Shortcut Quick Create",
+  "description": "Shortcut Quick Create",
+  "icon": "extension_icon.png",
+  "author": "chad_mcelligott",
+  "categories": [
+    "Productivity"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "index",
+      "title": "Shortcut Quick Create",
+      "subtitle": "Shortcut Quick Create",
+      "description": "Shortcut Quick Create",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "apiToken",
+      "description": "Provides access to your Shortcut instance. Retrieve one at https://app.shortcut.com/settings/account/api-tokens.",
+      "type": "password",
+      "required": true,
+      "title": "Shortcut API Token"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.69.0",
+    "isomorphic-fetch": "^3.0.0",
+    "ky": "^1.2.2"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.6",
+    "@types/isomorphic-fetch": "^0.0.39",
+    "@types/node": "20.8.10",
+    "@types/react": "18.2.27",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
