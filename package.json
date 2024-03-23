@@ -23,6 +23,13 @@
       "subtitle": "Shortcut",
       "description": "Show stories matching your Shortcut Quick Create criteria",
       "mode": "view"
+    },
+    {
+      "name": "criteria",
+      "title": "Quick Create Criteria",
+      "subtitle": "Shortcut",
+      "description": "Setup your Shortcut Quick Create criteria",
+      "mode": "view"
     }
   ],
   "preferences": [
@@ -37,16 +44,22 @@
   "dependencies": {
     "@raycast/api": "^1.69.0",
     "@raycast/utils": "^1.13.1",
+    "common-tags": "^1.8.2",
+    "date-fns": "^3.6.0",
     "isomorphic-fetch": "^3.0.0",
-    "ky": "^1.2.2"
+    "ky": "^1.2.2",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.6",
+    "@types/common-tags": "^1.8.4",
     "@types/isomorphic-fetch": "^0.0.39",
+    "@types/lodash": "^4.17.0",
     "@types/node": "20.8.10",
     "@types/react": "18.2.27",
     "eslint": "^8.51.0",
     "prettier": "^3.0.3",
+    "react-devtools": "^4.28.4",
     "typescript": "^5.2.2"
   },
   "scripts": {
