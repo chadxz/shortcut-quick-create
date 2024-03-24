@@ -2,7 +2,6 @@ import {
   Action,
   ActionPanel,
   Form,
-  FormSeparator,
   getPreferenceValues,
   Icon,
   showToast,
@@ -11,10 +10,10 @@ import {
 } from "@raycast/api";
 import { FormValidation, useForm } from "@raycast/utils";
 import { useEffect, useMemo, useState } from "react";
-import useWorkflows from "../api/workflows";
-import { MyPreferences } from "../preferences";
+import useWorkflows from "../../api/workflows";
+import { MyPreferences } from "../../preferences";
 import { omit, sortBy } from "lodash";
-import { loadCriteria, saveCriteria } from "../storage";
+import { loadCriteria, saveCriteria } from "../../storage/criteria";
 import { randomUUID } from "node:crypto";
 import { oneLine } from "common-tags";
 
@@ -70,8 +69,9 @@ export default function CriteriaForm({ id }: { id?: string }) {
         return;
       }
 
-      setInitialValues(JSON.parse(criteria));
-      setSelectedFields(omit(criteria, "name"));
+      const criteriaFormValues = JSON.parse(criteria) as StoryCriteriaForm;
+      setInitialValues(criteriaFormValues);
+      setSelectedFields(Object.keys(omit(criteriaFormValues, "name")));
     })();
   }, [id, setInitialValues]);
 
