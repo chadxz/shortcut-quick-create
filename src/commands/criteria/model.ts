@@ -18,23 +18,48 @@ interface WorkflowState {
 
 type StoryType = "bug" | "feature" | "story";
 
-class StoryCriteria {
-  customFields?: StoryCustomField[];
-  deadline?: ISO8601Timestamp;
-  description?: string; // length: 100,000
-  epicId?: number;
-  estimate?: number;
-  followers?: UUID[];
-  id: UUID;
-  iterationId?: number;
-  labels?: StoryLabel[];
-  ownerIds?: UUID[];
-  requestedById?: UUID;
-  teamId?: UUID;
-  type?: StoryType;
-  workflowState?: WorkflowState;
+export class StoryCriteria {
+  readonly customFields?: StoryCustomField[];
+  readonly deadline?: ISO8601Timestamp;
+  readonly description?: string; // length: 100,000
+  readonly epicId?: number;
+  readonly estimate?: number;
+  readonly followers?: UUID[];
+  readonly id: UUID;
+  readonly iterationId?: number;
+  readonly labels?: StoryLabel[];
+  readonly name: string;
+  readonly ownerIds?: UUID[];
+  readonly requestedById?: UUID;
+  readonly teamId?: UUID;
+  readonly type?: StoryType;
+  readonly workflowState?: WorkflowState;
 
   constructor(id: UUID) {
     this.id = id;
+  }
+
+  static fromForm(form: StoryCriteriaForm) {
+
+  }
+
+  toForm(): StoryCriteriaForm {
+    return {
+      name: this.name,
+      // customFields: this.customFields,
+      // deadline: this.deadline,
+      description: this.description,
+      // epicId: this.epicId,
+      // estimate: this.estimate,
+      // followers: this.followers,
+      // iterationId: this.iterationId,
+      // labels: this.labels,
+      // ownerIds: this.ownerIds,
+      // requestedById: this.requestedById,
+      // teamId: this.teamId,
+      // type: this.type,
+      workflowId: this.workflowState?.workflowId?.toString() ?? "",
+      workflowStateId: this.workflowState?.id?.toString() ?? "",
+    };
   }
 }

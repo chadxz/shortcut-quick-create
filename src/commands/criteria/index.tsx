@@ -1,11 +1,20 @@
 import { Action, ActionPanel, Color, Icon, List, useNavigation } from "@raycast/api";
-import CriteriaForm from "./criteria-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CriteriaForm from "#src/commands/criteria/form";
+import { loadAllCriteria } from "#src/commands/criteria/storage";
+import { StoryCriteria } from "#src/commands/criteria/model";
 
 export default function Command() {
   const { push } = useNavigation();
 
-  const [criteria, setCriteria] = useState<StoryCriteria>();
+  const [criteria, setCriteria] = useState<StoryCriteria[]>();
+
+  useEffect(() => {
+    void (async () => {
+      const criteria = await loadAllCriteria();
+      setCriteria(criteria);
+    })();
+  }, []);
 
   return (
     <List

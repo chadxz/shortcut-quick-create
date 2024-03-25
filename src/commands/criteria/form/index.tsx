@@ -10,30 +10,12 @@ import {
 } from "@raycast/api";
 import { FormValidation, useForm } from "@raycast/utils";
 import { useEffect, useMemo, useState } from "react";
-import useWorkflows from "../../api/workflows";
-import { MyPreferences } from "../../preferences";
+import useWorkflows from "#src/api/workflows";
+import { MyPreferences } from "#src/preferences";
 import { omit, sortBy } from "lodash";
-import { loadCriteria, saveCriteria } from "../../storage/criteria";
+import { loadCriteria, saveCriteria } from "../storage";
 import { randomUUID } from "node:crypto";
 import { oneLine } from "common-tags";
-
-interface StoryCriteriaForm {
-  name: string;
-  customFields: string[];
-  deadline: string;
-  description: string;
-  epicId: number;
-  estimate: number;
-  followers: string[];
-  iterationId: string;
-  labels: string[];
-  ownerIds: string[];
-  requestedById: string;
-  teamId: string;
-  type: string;
-  workflowId: string;
-  workflowStateId: string;
-}
 
 const ADD_CRITERIA_FIELD = "Add Criteria Field";
 
