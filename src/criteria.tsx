@@ -1,1 +1,1 @@
-export { default } from "./commands/criteria";
+export { default } from "#src/commands/criteria";

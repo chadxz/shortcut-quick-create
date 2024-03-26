@@ -4,7 +4,7 @@
   "title": "Shortcut Quick Create",
   "description": "Quickly add a new story in Shortcut",
   "icon": "extension_icon.png",
-  "author": "chad_mcelligott",
+  "author": "chadxz",
   "categories": [
     "Productivity"
   ],
@@ -48,7 +48,8 @@
     "date-fns": "^3.6.0",
     "isomorphic-fetch": "^3.0.0",
     "ky": "^1.2.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.6",

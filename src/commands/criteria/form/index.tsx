@@ -9,13 +9,18 @@ import {
   useNavigation,
 } from "@raycast/api";
 import { FormValidation, useForm } from "@raycast/utils";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import useWorkflows from "#src/api/workflows";
 import { MyPreferences } from "#src/preferences";
-import { omit, sortBy } from "lodash";
-import { loadCriteria, saveCriteria } from "../storage";
+import { omit, omitBy, sortBy, isUndefined } from "lodash";
+import { saveCriteria } from "#src/commands/criteria/storage";
 import { randomUUID } from "node:crypto";
 import { oneLine } from "common-tags";
+import {
+  StoryCriteriaFormFields,
+  StoryCriteriaFormSchema,
+} from "#src/commands/criteria/form/model";
+import { StoryCriteria } from "#src/commands/criteria/model";
 
 const ADD_CRITERIA_FIELD = "Add Criteria Field";
 
@@ -35,32 +40,44 @@ const ALL_CRITERIA_FIELDS = [
   "workflowStateId",
 ];
 
-export default function CriteriaForm({ id }: { id?: string }) {
+function buildDefaultValues(): StoryCriteriaFormFields {
+  return {
+    id: randomUUID(),
+    name: "",
+  };
+}
+
+export default function CriteriaForm({
+  criteria,
+}: {
+  criteria?: StoryCriteria;
+}) {
   const { pop } = useNavigation();
-  const [initialValues, setInitialValues] = useState<StoryCriteriaForm>();
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
 
-  useEffect(() => {
-    void (async () => {
-      if (!id) {
-        return;
-      }
+  const initialValues = useMemo(() => {
+    if (!criteria) {
+      return buildDefaultValues();
+    }
 
-      const criteria = await loadCriteria(id);
-      if (!criteria) {
-        return;
-      }
+    const values = StoryCriteriaFormSchema.parse(criteria);
 
-      const criteriaFormValues = JSON.parse(criteria) as StoryCriteriaForm;
-      setInitialValues(criteriaFormValues);
-      setSelectedFields(Object.keys(omit(criteriaFormValues, "name")));
-    })();
-  }, [id, setInitialValues]);
+    setSelectedFields(
+      Object.keys(omitBy(omit(values, ["id", "name"]), isUndefined)),
+    );
 
-  const { handleSubmit, itemProps, values } = useForm<StoryCriteriaForm>({
-    async onSubmit(criteria: StoryCriteriaForm) {
-      console.log(omit(criteria, ADD_CRITERIA_FIELD));
-      await saveCriteria(id ?? randomUUID(), JSON.stringify(criteria));
+    return values;
+  }, [criteria]);
+
+  console.log("initialValues", initialValues);
+  const { handleSubmit, itemProps, values } = useForm<StoryCriteriaFormFields>({
+    async onSubmit(fields: StoryCriteriaFormFields) {
+      await saveCriteria(
+        StoryCriteria.fromForm({
+          ...fields,
+          id: criteria?.id ?? randomUUID(),
+        }),
+      );
       await showToast({
         title: "Success!",
         message: "Your criteria has been saved.",
@@ -98,7 +115,7 @@ export default function CriteriaForm({ id }: { id?: string }) {
       actions={
         <ActionPanel>
           <Action.SubmitForm
-            title={id ? "Update Criteria" : "Create Criteria"}
+            title={criteria ? "Update Criteria" : "Create Criteria"}
             icon={Icon.Stars}
             onSubmit={handleSubmit}
           />

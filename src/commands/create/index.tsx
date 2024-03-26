@@ -1,16 +1,26 @@
-import { ActionPanel, showToast, List, Toast, getPreferenceValues, showHUD, Icon, Color, Action } from "@raycast/api";
+import {
+  ActionPanel,
+  showToast,
+  List,
+  Toast,
+  getPreferenceValues,
+  showHUD,
+  Icon,
+  Color,
+  Action,
+} from "@raycast/api";
 import { useState } from "react";
 import ky from "ky";
 import "isomorphic-fetch";
-import { Maybe } from "../../types";
-import { MyPreferences } from "../../preferences";
+import { Maybe } from "#src/types";
+import { MyPreferences } from "#src/preferences";
 
 async function addToShortcut(title: Maybe<string>) {
   if (!title) {
     return showToast({
       title: "Error",
       message: "Please enter text",
-      style: Toast.Style.Failure
+      style: Toast.Style.Failure,
     });
   }
 
@@ -24,12 +34,12 @@ async function addToShortcut(title: Maybe<string>) {
       custom_fields: [
         {
           field_id: "6495ab7d-ac45-4c04-a8e4-b20ab20f4562",
-          value_id: "65ef6425-6435-4810-a3d4-dc6bc03fc317"
-        }
+          value_id: "65ef6425-6435-4810-a3d4-dc6bc03fc317",
+        },
       ],
       group_id: "6495ab7d-4515-467e-8edc-4b53898f13ac",
-      workflow_state_id: 500000006
-    }
+      workflow_state_id: 500000006,
+    },
   });
 
   console.log(await res.json());
@@ -46,7 +56,10 @@ export default function Command() {
         filtering={false}
         actions={
           <ActionPanel>
-            <Action title="Add to Shortcut" onAction={() => addToShortcut(searchText)} />
+            <Action
+              title="Add to Shortcut"
+              onAction={() => addToShortcut(searchText)}
+            />
           </ActionPanel>
         }
         onSearchTextChange={setSearchText}

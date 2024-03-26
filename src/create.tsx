@@ -1,1 +1,1 @@
-export { default } from "./commands/create";
+export { default } from "#src/commands/create";
